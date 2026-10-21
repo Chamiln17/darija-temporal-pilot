@@ -13,6 +13,8 @@ The Fatima form asks applicants to do this analysis themselves. This file record
 
 ## AI-assisted (Claude)
 
+- `results/review_pack.md`: a script-generated list of the outputs that did not match the gold label, quoted verbatim, to speed up my reading. It contains no verdicts.
+
 - Summaries of methodology papers I read for preparation (CheckList, contrast sets, prompt sensitivity, and others listed in the README).
 - Planning documents I used while forming the proposal; they are not part of this repository.
 - The notebook, `scripts/pilot.py` (prompt building, answer parsing, metrics) and its self-check, and the repository layout. These are infrastructure: they do not choose cases, labels or conclusions.

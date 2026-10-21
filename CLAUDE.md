@@ -18,8 +18,8 @@ The form says: "conduct the analysis yourself rather than asking an AI agent …
 - [x] Proposal written by Chamel (`docs/proposal.md`).
 - [x] Notebook, `scripts/pilot.py` and its self-check (`python scripts/test_pilot.py`). The notebook embeds `pilot.py`; after editing `pilot.py`, run `python scripts/build_notebook.py`.
 - [x] 20 cases drafted (AI) and reviewed by Chamel on 21 October 2026: 4 families (base + contrast, French + Darija–French) and 2 sanity checks; all APPROVED or EDITED.
-- [ ] Run the notebook on Colab (T4): 20 cases × 2 prompt formats = 40 runs. The model-loading cell has not yet been run on a GPU.
-- [ ] Put `results/` (raw outputs, scoring sheet, run config) in the repo.
+- [x] Notebook run on Colab T4 on 21 October 2026 (started 22:46 UTC): 40 non-thinking runs plus 9 thinking-mode reruns of failures. `results/cases_used.csv` is identical to `data/cases.csv`.
+- [x] `results/` copied into the repo; `results/review_pack.md` (AI-generated, verbatim quotes only) lists the 9 mismatches and 8 extract answers to judge.
 - [ ] Chamel reads the outputs and fills the scoring sheet; run the metrics cell.
 - [ ] Chamel writes README questions 1 and 3 and the results section; complete `provenance.md` TODOs.
 - [ ] Chamel publishes the public Bucket (`docs/publish.md`) and pastes the link into the form.
