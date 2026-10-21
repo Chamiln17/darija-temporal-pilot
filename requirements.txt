@@ -1,0 +1,7 @@
+# Colab installs these in the first notebook cell; exact versions are recorded in results/run_config.json.
+transformers>=5.0
+accelerate
+torch
+torchvision
+pillow
+pandas

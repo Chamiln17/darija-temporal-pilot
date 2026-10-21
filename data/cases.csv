@@ -1,0 +1,6 @@
+﻿family_id,variant_id,language,task_type,fictional_rule,narrative,question,gold_answer,gold_rationale,changed_feature,same_answer_as_base,written_by,review_status,notes
+F1,base,fr,status,"<one sentence: which event makes the right active, e.g. 'At Fund X, rights start on the effective date written in the activation notice.'>",<story in standard French>,"<question, e.g. 'On 9 May, is the applicant's access active?'>",<CONFIRMED_ACTIVE | CONFIRMED_NOT_ACTIVE | INSUFFICIENT_EVIDENCE>,"<why, from the rule and the story only>",,,chamel,EXAMPLE,delete these example rows
+F1,base,darija_fr,status,<same rule>,"<same facts, your Darija-French>",<same question>,<same label as the French row>,,language,yes,chamel,EXAMPLE,
+F1,contrast,fr,status,<same rule>,<base story with ONE fact or date changed>,<same question>,<the label that the change produces>,,<what you changed>,no,chamel,EXAMPLE,
+F2,base,fr,order,<rule>,<story>,"<'Put these events in order: E1 = ..., E2 = ..., E3 = ...'>","<e.g. E2, E1, E3>",,,,chamel,EXAMPLE,
+S1,sanity,fr,extract,<rule>,<simple story>,<simple comprehension question>,<short answer>,,,,chamel,EXAMPLE,sanity check: the model can read the story at all

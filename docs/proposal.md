@@ -1,0 +1,9 @@
+### Temporal Reasoning in Algerian Darija–French Code-Switched Narratives
+
+As an Algerian, I often communicate using a mixture of Algerian Darija and French, especially when discussing administrative procedures. When I tried to switch my Chifa card from CNAS to CASNOS after getting my auto-entrepreneur status, I was sent between offices and eventually had to travel around 500 km to Algiers without knowing which documents to bring. CASNOS later told me everything was good, yet my card still did not appear on Damancom even though I could use it normally at pharmacies. This made me wonder whether an AI model could understand the story as I would naturally tell it.
+
+I suspect that Qwen3.5-4B might struggle to connect words and meanings across languages when a narrative switches between Romanized Algerian Darija and French. This could make an already difficult task—temporal reasoning—even harder: the model has to understand events, reconstruct their order, and distinguish facts from conclusions. Administrative procedures would be my case study, although I think the problem applies to code-switched conversations more broadly.
+
+I would evaluate Qwen3.5-4B on a small set of administrative scenarios in two equivalent versions: standard French and natural Darija–French. Following CheckList, I would first ask simple comprehension and event-order questions. Then I would change things that should not affect the answer, such as names or phrasing, and things that should affect it, such as event order or dates. I would compare accuracy and consistency across versions and manually inspect errors to see whether they come from language comprehension or reasoning.
+
+I need to experiment before deciding on a solution. I would first try prompts that ask the model to extract the events and order them before answering. If that does not help, I would consider fine-tuning on authentic Darija–French narratives with validated temporal annotations.
