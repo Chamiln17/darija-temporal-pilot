@@ -16,4 +16,4 @@ The Fatima form asks applicants to do this analysis themselves. This file record
 - Summaries of methodology papers I read for preparation (CheckList, contrast sets, prompt sensitivity, and others listed in the README).
 - Planning documents I used while forming the proposal; they are not part of this repository.
 - The notebook, `scripts/pilot.py` (prompt building, answer parsing, metrics) and its self-check, and the repository layout. These are infrastructure: they do not choose cases, labels or conclusions.
-- TODO: list any case rows drafted with AI help (`written_by = ai_draft`), and what I changed in them.
+- First drafts of all 20 case rows in `data/cases.csv` (`written_by = ai_draft`): rules, French and Darija–French narratives, questions and gold labels. The Darija drafts follow my own romanized account of the Chifa story; the public corpora `awras/lahja-dataset-v1` and `algerian-nlp/algerian-darja-corpus` (CC-BY-4.0) were looked at for vocabulary only, and no text was copied from them. TODO (Chamel): for each row, what I checked or rewrote (set `review_status` to APPROVED, EDITED or REJECTED).
