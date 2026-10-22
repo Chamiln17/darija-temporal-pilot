@@ -161,13 +161,74 @@ files.download("results.zip")
 """),
 ]
 
-nb = {"cells": cells, "metadata": {"accelerator": "GPU", "colab": {"provenance": []},
-                                   "kernelspec": {"name": "python3", "display_name": "Python 3"},
-                                   "language_info": {"name": "python"}},
-      "nbformat": 4, "nbformat_minor": 5}
-for i, c in enumerate(nb["cells"]):
-    c["id"] = f"cell-{i}"
-path = os.path.join(ROOT, "notebooks", "eval_qwen35_4b.ipynb")
-with open(path, "w", encoding="utf-8") as f:
-    json.dump(nb, f, indent=1, ensure_ascii=False)
-print("wrote", path)
+
+
+def write(cells, name):
+    nb = {"cells": cells, "metadata": {"accelerator": "GPU", "colab": {"provenance": []},
+                                       "kernelspec": {"name": "python3", "display_name": "Python 3"},
+                                       "language_info": {"name": "python"}},
+          "nbformat": 4, "nbformat_minor": 5}
+    for i, c in enumerate(nb["cells"]):
+        c["id"] = f"cell-{i}"
+    path = os.path.join(ROOT, "notebooks", name)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(nb, f, indent=1, ensure_ascii=False)
+    print("wrote", path)
+
+
+write(cells, "eval_qwen35_4b.ipynb")
+
+# Diagnostic: rerun the F4 Darija cases with Chamel's connector glossary in the prompt (non-thinking).
+# Shares the install, config, pilot.py, environment and model-loading cells with the main notebook.
+glossary_cells = [
+    md("""
+# Glossary check: F4 Darija–French with a connector glossary (non-thinking)
+
+Reruns the F4 Darija–French cases (base and contrast, formats A and B) with your glossary of Darija time connectors added just before the story. Same model, revision, decoding and answer parsing as the main run; only the glossary is new.
+
+1. Runtime → **T4 GPU**. 2. Upload `cases.csv` and `glossary.txt` (both from `data/`). 3. Run all. 4. Download `glossary_results.zip`.
+"""),
+    cells[1], cells[2],
+    code('OUT_DIR = "results_glossary"  # separate folder: never overwrite the main run results'),
+    cells[3], cells[4],
+    code("""
+GLOSSARY = load_glossary("glossary.txt")
+print(GLOSSARY)
+cases = [c for c in load_cases(CASES_PATH) if c["family_id"] == "F4" and c["language"] == "darija_fr"]
+print(len(cases), "F4 Darija cases")
+"""),
+    cells[6],
+    code("""
+RAW_G = f"{OUT_DIR}/raw_outputs_glossary.jsonl"
+json.dump({**run_config, "glossary": GLOSSARY, "cases": [c["case_id"] for c in cases]},
+          open(f"{OUT_DIR}/run_config_glossary.json", "w"), indent=2, ensure_ascii=False)
+done = {(r["case_id"], r["prompt_format"]) for r in read_jsonl(RAW_G)}
+todo = [(c, f) for f in FORMATS for c in cases if (c["case_id"], f) not in done]
+print(f"{len(done)} done, {len(todo)} to run")
+for k, (c, fmt) in enumerate(todo, 1):
+    prompt = build_prompt(c, fmt, glossary=GLOSSARY)
+    t = time.time()
+    raw, n_tokens = generate(prompt)
+    parsed, status = parse_answer(raw, c["task_type"])
+    append_jsonl(RAW_G, {"case_id": c["case_id"], "prompt_format": fmt, "thinking": False, "glossary": True,
+                         "prompt": prompt, "raw_output": raw, "new_tokens": n_tokens,
+                         "truncated": n_tokens >= MAX_NEW_TOKENS, "parsed_answer": parsed, "parse_status": status,
+                         "auto_correct": auto_score(c, parsed, status), "seconds": round(time.time() - t, 1)})
+    print(f"[{k}/{len(todo)}] {c['case_id']} fmt={fmt} -> {parsed or status} gold={c['gold_answer']} ({time.time() - t:.0f}s)")
+"""),
+    code("""
+res = read_jsonl(RAW_G)
+print(f"with glossary: {sum(r['auto_correct'] is True for r in res)}/{len(res)} correct (without glossary: 0/4 in the main run)")
+for r in res:
+    print("=====", r["case_id"], r["prompt_format"], "->", r["parsed_answer"])
+    print(r["raw_output"][:1200])
+"""),
+    code("""
+import shutil
+shutil.copy("glossary.txt", f"{OUT_DIR}/glossary_used.txt")
+shutil.make_archive("glossary_results", "zip", OUT_DIR)
+from google.colab import files
+files.download("glossary_results.zip")
+"""),
+]
+write(glossary_cells, "glossary_check_f4.ipynb")

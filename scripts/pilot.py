@@ -65,11 +65,30 @@ def load_cases(path, approved_only=True):
     return cases
 
 
-def build_prompt(case, fmt):
-    return PROMPT_FORMATS[fmt].format(
+GLOSSARY_BLOCKS = {
+    "A": "Glossary of Darija words: {glossary}\n\nStory:",
+    "B": "### GLOSSARY OF DARIJA WORDS\n{glossary}\n### STORY",
+}
+
+
+def build_prompt(case, fmt, glossary=None):
+    """With a glossary, the same prompt gets a glossary section just before the story."""
+    prompt = PROMPT_FORMATS[fmt].format(
         rule=case["fictional_rule"], narrative=case["narrative"], question=case["question"],
         instruction=ANSWER_INSTRUCTIONS[case["task_type"]],
     )
+    if glossary:
+        marker = "Story:" if fmt == "A" else "### STORY"
+        prompt = prompt.replace(marker, GLOSSARY_BLOCKS[fmt].format(glossary=glossary.strip()), 1)
+    return prompt
+
+
+def load_glossary(path):
+    text = open(path, encoding="utf-8-sig").read().strip()
+    lines = [l for l in text.splitlines() if l.strip() and not l.lstrip().startswith("#")]
+    if not lines or any("TODO" in l for l in lines):
+        raise ValueError(f"{path} still has TODO lines or is empty; write the glossary first")
+    return "\n".join(lines)
 
 
 def final_text(raw):

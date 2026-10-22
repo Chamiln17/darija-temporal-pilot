@@ -1,0 +1,9 @@
+# Darija time connectors, in Chamel's own words. One per line: word = meaning.
+# Lines starting with # are ignored. The notebook refuses to run while any TODO is left.
+# Include every connector the F4 stories depend on.
+men ba3d ma = after that 
+9bel ma = before that
+psk = because
+f lawel = in the beginning
+3 sway3 = 3 hours
+ki wsalt = when I arrived

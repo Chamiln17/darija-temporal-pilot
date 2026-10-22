@@ -1,0 +1,29 @@
+{
+  "model_id": "Qwen/Qwen3.5-4B",
+  "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+  "gpu": "Tesla T4",
+  "dtype": "torch.float16",
+  "python": "3.13.15",
+  "torch": "2.14.1+cu130",
+  "transformers": "5.20.2",
+  "decoding": {
+    "do_sample": false,
+    "num_beams": 1,
+    "max_new_tokens": 384
+  },
+  "prompt_formats": {
+    "A": "Rule: {rule}\n\nStory: {narrative}\n\nQuestion: {question}\n\n{instruction}",
+    "B": "### RULE\n{rule}\n### STORY\n{narrative}\n### QUESTION\n{question}\n### FORMAT\n{instruction}"
+  },
+  "answer_instructions": {
+    "status": "End your reply with one line: ANSWER: CONFIRMED_ACTIVE, ANSWER: CONFIRMED_NOT_ACTIVE or ANSWER: INSUFFICIENT_EVIDENCE.",
+    "order": "End your reply with one line: ANSWER: followed by the event IDs in chronological order, comma-separated (for example ANSWER: E2, E1, E3).",
+    "extract": "End your reply with one line: ANSWER: followed by your short answer."
+  },
+  "started_utc": "2026-10-22T00:19:37",
+  "glossary": "men ba3d ma = after that \n9bel ma = before that\npsk = because\nf lawel = in the beginning\n3 sway3 = 3 hours\nki wsalt = when I arrived",
+  "cases": [
+    "F4-base-darija_fr",
+    "F4-contrast-darija_fr"
+  ]
+}

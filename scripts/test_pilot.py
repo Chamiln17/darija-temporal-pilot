@@ -64,4 +64,19 @@ assert m["by_language"] == {"darija_fr": "1/2", "fr": "3/3"}, m
 assert m["contrast_consistency"] == "1/2", m
 assert m["cross_language_both_correct"] == "1/2", m
 assert m["cross_language_same_answer"] == "1/2", m
+# glossary goes right before the story, once, in both formats; no glossary leaves the prompt unchanged
+c = case("F4", "base", "darija_fr", "order", "E1, E2")
+for fmt in ("A", "B"):
+    g = p.build_prompt(c, fmt, glossary="psk = because")
+    assert g.count("psk = because") == 1 and g.index("psk = because") < g.index("N"), (fmt, g)
+    assert p.build_prompt(c, fmt) == p.build_prompt(c, fmt, glossary=None)
+fd, gpath = tempfile.mkstemp(suffix=".txt"); os.close(fd)
+open(gpath, "w", encoding="utf-8").write("# comment\npsk = TODO\n")
+try:
+    p.load_glossary(gpath)
+    raise AssertionError("TODO glossary accepted")
+except ValueError:
+    pass
+open(gpath, "w", encoding="utf-8").write("# comment\npsk = because\n9bel ma = before\n")
+assert p.load_glossary(gpath) == "psk = because\n9bel ma = before"
 print("all checks passed")
