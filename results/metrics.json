@@ -1,27 +1,32 @@
 {
-  "overall": "23/32",
-  "unjudged": 8,
+  "overall": "34/40",
+  "unjudged": 0,
   "by_language": {
-    "darija_fr": "10/16",
-    "fr": "13/16"
+    "darija_fr": "15/20",
+    "fr": "19/20"
   },
   "by_prompt_format": {
-    "A": "13/16",
-    "B": "10/16"
+    "A": "18/20",
+    "B": "16/20"
   },
   "by_task_type": {
-    "extract": "0/0",
+    "extract": "8/8",
     "order": "4/8",
-    "status": "19/24"
+    "status": "22/24"
   },
   "by_variant_id": {
     "base": "14/16",
-    "contrast": "9/16",
-    "sanity": "0/0"
+    "contrast": "12/16",
+    "sanity": "8/8"
   },
   "parse_failures": 1,
-  "cross_language_same_answer": "10/16",
-  "cross_language_both_correct": "9/16",
-  "contrast_consistency": "9/16",
-  "error_types": {}
+  "cross_language_same_answer": "12/20",
+  "cross_language_both_correct": "15/20",
+  "contrast_consistency": "12/16",
+  "error_types": {
+    "language": 4,
+    "inference": 1,
+    "format": 1
+  },
+  "cross_language_note": "cross_language_same_answer compares answer text, so differently worded correct extract answers count as different"
 }
