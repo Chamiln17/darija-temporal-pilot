@@ -4,10 +4,9 @@ Pilot evaluation of `Qwen/Qwen3.5-4B` for the Fatima Fellowship technical challe
 
 ## Question 1 — The blind spot
 
-TODO (Chamel, your words, 4–6 sentences):
-- your Chifa story, short (CNAS → CASNOS, 500 km to Algiers, portal shows nothing, pharmacy works);
-- why standard benchmarks miss this: Romanized Darija mixed with French, told the way people actually talk;
-- the blind spot in one sentence, narrow (your answer to Q1): the model reads the Darija facts but misreads Darija time connectors, so it gets the order of events wrong.
+As an Algerian, I often communicate using a mixture of Algerian Darija and French, especially when discussing administrative procedures. When I tried to switch my Chifa card from CNAS to CASNOS after getting my auto-entrepreneur status, I was sent between offices and eventually had to travel around 500 km to Algiers without knowing which documents to bring. CASNOS later told me everything was good, yet my card still did not appear on Damancom even though I could use it normally at pharmacies. This made me wonder whether an AI model could understand the story as I would naturally tell it.
+
+Most benchmarks are in Modern Standard Arabic or English, not Darija the way we actually write it. The model reads Darija facts fine but fails on time connectors. My Chifa case passed, but the failure was in event order.
 
 ## What I built
 
@@ -37,7 +36,7 @@ Thinking-mode reruns of the failures (diagnostic, not counted above): F3 contras
 
 F4 Darija–French rerun with my glossary of time connectors in the prompt (`data/glossary.txt`, non-thinking, same settings): 0/4 correct (without it: 0/4); 2 of the 4 outputs were cut off at 384 tokens without an answer; in one output (base, format B) the Tlemcen visit and the trip are now in the right order but the download and the diploma copy are still swapped (`results_glossary/`).
 
-TODO (Chamel, your words): what the glossary run tells you.
+The glossary alone isn't enough; it copies my words literally.
 
 ### One story, two languages
 
@@ -68,14 +67,11 @@ From the thinking-mode rerun of the same case (format B):
 Wait, one detail: "3 sway3 men ba3d ma". "3 sway3" means "3 times". "men ba3d ma" means "after".
 ```
 
-TODO (Chamel, your words, 2–4 sentences): what these outputs tell you. Your answers from the interview: thinking more does not help when the model does not know the word, and it notices its doubt but has nothing to resolve it; the results suggest (not prove) that connectors carry the temporal meaning. Also say that my own Chifa case (F2) passed, and that the failure showed up elsewhere.
+Thinking more doesn't help when it doesn't know the word.
 
 ## Question 3 — Path forward
 
-TODO (Chamel, your words, 3–5 sentences), from your answer to Q9:
-- the glossary in the prompt as a test of whether connectors are the cause (and what it gave);
-- the fix: a curated set of Darija–French time-connector examples, first as an evaluation set, then as fine-tuning data on annotated Darija–French timelines if prompting is not enough;
-- why this follows from the errors you saw.
+I added a glossary to Qwen's prompt because it failed all the connector cases. It didn't work: Qwen copied my words literally. The model didn't fix its errors with thinking because it doesn't know the words, maybe because the tokenizer doesn't have them as single tokens, so their meaning isn't stored in the embedding space. For example, *après* is one token, while *ba3d* is split into `ba`, `3`, `d`. Next, I would fine-tune the model after curating a better, large-scale dataset that matches what I wrote myself.
 
 ## Limitations
 

@@ -21,7 +21,7 @@ The form says: "conduct the analysis yourself rather than asking an AI agent …
 - [x] Notebook run on Colab T4 on 21 October 2026 (started 22:46 UTC): 40 non-thinking runs plus 9 thinking-mode reruns of failures. `results/cases_used.csv` is identical to `data/cases.csv`.
 - [x] `results/` copied into the repo; `results/review_pack.md` (AI-generated, verbatim quotes only) lists the 9 mismatches and 8 extract answers to judge.
 - [x] Chamel scored the outputs on 22 October 2026; `results/metrics.json` recomputed from his verdicts (34/40; French 19/20, Darija–French 15/20; F4 order French 4/4, Darija 0/4). F1 contrast: both NOT_ACTIVE and INSUFFICIENT_EVIDENCE accepted (gold ambiguous).
-- [ ] Chamel writes README questions 1 and 3 and the results section; complete `provenance.md` TODOs.
+- [x] Glossary check run (F4 Darija with glossary: 0/4, `results_glossary/`). README questions 1 and 3 written by Chamel (Claude: spelling/grammar and factual sections only); provenance updated.
 - [ ] Chamel publishes the public Bucket (`docs/publish.md`) and pastes the link into the form.
 
 ## Layout
